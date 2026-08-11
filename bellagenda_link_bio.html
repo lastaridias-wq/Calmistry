@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellagenda & Vendor Apps</title>
+    <!-- Font kekinian favorit Gen Z -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette warna elegan dan kalem (Calm/Aesthetic vibe) */
+            --bg-color: #f4f0ec;
+            --text-main: #2d2a26;
+            --text-muted: #736d65;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.4);
+            --hover-bg: rgba(255, 255, 255, 0.95);
+            --accent: #b4a284;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #f4f0ec 0%, #e3dcd2 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 480px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .profile {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+        }
+        
+        .profile h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .profile p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: left;
+            padding-left: 8px;
+        }
+        
+        /* Glassmorphism Card Style */
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            padding: 16px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        
+        .link-card:hover {
+            background: var(--hover-bg);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+        
+        .link-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .icon-wrapper {
+            font-size: 26px;
+            background: #fff;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .text-content h2 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .text-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge.free {
+            background: #e0f2e9;
+            color: #256a42;
+        }
+        
+        .badge.paid {
+            background: #f8e8d0;
+            color: #9c6c22;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <!-- Avatar estetik -->
+            <img src="https://i.pinimg.com/736x/19/21/50/192150937c8cb1601a4e12e95a98bf6b.jpg" alt="Bellagenda Profile">
+            <h1>Bellagenda 🕊️</h1>
+            <p>Sistem Digital untuk Vendor Wedding.<br>Kelola klien lebih elegan, tanpa burnout.</p>
+        </div>
+
+        <div class="section-title">✨ Free Tools (Coba Sekarang)</div>
+        
+        <a href="#" class="link-card">
+            <div class="link-content">
+                <div class="icon-wrapper">📱</div>
+                <div class="text-content">
+                    <h2>Bellagenda Lite</h2>
+                    <p>App Tracker Klien (Versi Ringan)</p>
+                </div>
+            </div>
+            <span class="badge free">Gratis</span>
+        </a>
+
+        <a href="#" class="link-card">
+            <div class="link-content">
+                <div class="icon-wrapper">💌</div>
+                <div class="text-content">
+                    <h2>Email/WA Templates</h2>
+                    <p>Skrip Anti-Ghosting untuk WO</p>
+                </div>
+            </div>
+            <span class="badge free">Gratis</span>
+        </a>
+
+        <div class="section-title" style="margin-top: 32px;">💍 Premium Apps (Auto-Pilot)</div>
+
+        <a href="#" class="link-card">
+            <div class="link-content">
+                <div class="icon-wrapper">🚀</div>
+                <div class="text-content">
+                    <h2>Bellagenda PRO</h2>
+                    <p>Sistem Booking & Invoicing Klien</p>
+                </div>
+            </div>
+            <span class="badge paid">Premium</span>
+        </a>
+
+        <a href="#" class="link-card">
+            <div class="link-content">
+                <div class="icon-wrapper">📸</div>
+                <div class="text-content">
+                    <h2>Katalog Interaktif</h2>
+                    <p>Web-App Pricelist untuk MUA & Fotografer</p>
+                </div>
+            </div>
+            <span class="badge paid">Premium</span>
+        </a>
+
+        <footer>
+            Powered by Bellagenda Ecosystem
+        </footer>
+    </div>
+</body>
+</html>
