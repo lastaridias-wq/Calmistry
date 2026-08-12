@@ -70,19 +70,19 @@
         .links-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px; /* Sedikit dilonggarkan agar tombol muat */
         }
         
         .image-card {
             display: block;
             position: relative;
             width: 100%;
-            height: 220px; /* Tinggi gambar besar */
+            height: 220px;
             border-radius: 24px;
             overflow: hidden;
             text-decoration: none;
             box-shadow: 0 10px 24px rgba(0,0,0,0.04);
-            transform: translateZ(0); /* Hardware acceleration */
+            transform: translateZ(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
         }
         
@@ -102,15 +102,15 @@
             transform: scale(1.05);
         }
         
-        /* Gradient overlay to make text readable */
+        /* Gradient overlay */
         .card-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,0.9) 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 24px;
+            padding: 20px 24px;
             z-index: 1;
         }
         
@@ -118,7 +118,7 @@
             color: #FFFFFF;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             letter-spacing: 0.2px;
         }
         
@@ -127,29 +127,68 @@
             font-size: 13px;
             font-weight: 300;
             line-height: 1.4;
+            margin-bottom: 12px; /* Jarak dengan tombol */
+        }
+
+        /* Container untuk tombol aksi (Copy & WA) */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            flex-wrap: wrap; /* Agar tombol turun jika layar sempit */
         }
         
-        /* Tombol panah kecil estetik di pojok kanan bawah */
-        .arrow-icon {
-            position: absolute;
-            bottom: 24px;
-            right: 24px;
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 50%;
-            display: flex;
+        /* Tombol Aksi (Copy & WA) */
+        .action-btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 14px;
-            transition: background 0.3s ease;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #FFFFFF;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
         
-        .image-card:hover .arrow-icon {
-            background: rgba(255, 255, 255, 0.4);
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Pop-up Notifikasi (Toast) */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #2C2A28; /* Warna elegan */
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            padding: 14px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
         }
         
         footer {
@@ -165,7 +204,7 @@
     <div class="container">
         <!-- Profile Section -->
         <div class="profile">
-            <!-- Ganti src ini dengan logo/foto profil yang elegan -->
+            <!-- Ganti src ini dengan logo/foto profil Bellagenda -->
             <img src="https://cdn.phototourl.com/free/2026-08-12-19164677-db38-4cba-a447-00946f3022ca.png" alt="Bellagenda">
             <h1>Bellagenda</h1>
             <p>Sistem digital untuk vendor wedding.<br>Tampil profesional, kelola klien tanpa ribet.</p>
@@ -174,34 +213,59 @@
         <!-- Links Section -->
         <div class="links-wrapper">
             
-            <!-- Card 1: Main App / Booking System -->
-            <a href="https://link-ke-landing-page-aplikasi-utama.com" class="image-card">
-                <!-- Ganti link gambar dengan screenshot aplikasi/suasana kerja estetik -->
+            <!-- Card 1: Main App (PRO) -->
+            <!-- Link utama (href) masih bisa diisi link landing page jika gambar diklik -->
+            <a href="https://landingpage-bellagenda.com" class="image-card">
                 <img src="https://cdn.phototourl.com/free/2026-08-12-251b90f5-6408-4685-ba4c-366623dd1bcf.png" alt="Sistem Booking & Invoicing">
                 <div class="card-overlay">
                     <div class="card-title">Sistem Booking & Invoicing</div>
                     <div class="card-subtitle">Terima booking & kirim tagihan otomatis ke klien.</div>
-                    <div class="arrow-icon">➔</div>
+                    
+                    <!-- Area Tombol Aksi di dalam Card Overlay -->
+                    <div class="action-buttons">
+                        <!-- Tombol Copy Link (Panggil fungsi JS copyLink) -->
+                        <button class="action-btn copy-btn" onclick="copyLink('https://app.bellagenda.com/pro', event)">
+                            📋 Salin Link Web-App
+                        </button>
+                        
+                        <!-- Tombol Kirim ke WA (Menggunakan link wa.me) -->
+                        <a href="https://wa.me/?text=Buka%20di%20Laptop:%20https://app.bellagenda.com/pro" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
+                            📲 Kirim ke WA Saya
+                        </a>
+                    </div>
                 </div>
             </a>
 
             <!-- Card 2: Interactive Catalog -->
-            <a href="https://link-ke-demo-katalog.com" class="image-card">
+            <a href="https://landingpage-katalog.com" class="image-card">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Katalog Digital">
                 <div class="card-overlay">
                     <div class="card-title">Katalog Digital Interaktif</div>
                     <div class="card-subtitle">Ubah pricelist PDF-mu menjadi web-app elegan.</div>
-                    <div class="arrow-icon">➔</div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn copy-btn" onclick="copyLink('https://app.bellagenda.com/catalog', event)">
+                            📋 Salin Link Web-App
+                        </button>
+                        <a href="https://wa.me/?text=Buka%20Katalog%20di%20Laptop:%20https://app.bellagenda.com/catalog" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
+                            📲 Kirim ke WA Saya
+                        </a>
+                    </div>
                 </div>
             </a>
 
-            <!-- Card 3: Free Tool / Lead Magnet (Tanpa embel-embel gratis yang norak) -->
-            <a href="https://link-ke-tools-lite.com" class="image-card">
+            <!-- Card 3: Free Tool (Lite) -->
+            <a href="https://landingpage-lite.com" class="image-card">
                 <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Client Tracker">
                 <div class="card-overlay">
                     <div class="card-title">Client Tracker (Versi Lite)</div>
                     <div class="card-subtitle">Template pintar untuk mulai merapikan antrean klienmu.</div>
-                    <div class="arrow-icon">➔</div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn copy-btn" onclick="copyLink('https://app.bellagenda.com/lite', event)">
+                            📋 Salin Link Web-App
+                        </button>
+                    </div>
                 </div>
             </a>
 
@@ -211,5 +275,43 @@
             © 2026 Bellagenda Ecosystem
         </footer>
     </div>
+
+    <!-- Kotak Notifikasi Toast (Diletakkan di luar card, sebelum body ditutup) -->
+    <div id="toast">✅ Link berhasil disalin! Silakan paste di browser laptop Anda.</div>
+
+    <!-- Script JavaScript untuk fungsi Copy dan Stop Propagation -->
+    <script>
+        // Fungsi untuk menyalin link
+        function copyLink(linkAplikasi, event) {
+            // Mencegah klik tombol men-trigger klik gambar (pindah ke href landing page)
+            event.preventDefault(); 
+            event.stopPropagation(); 
+
+            // Menggunakan API Clipboard
+            navigator.clipboard.writeText(linkAplikasi).then(function() {
+                var toast = document.getElementById("toast");
+                toast.className = "show";
+                
+                // Menghilangkan notifikasi setelah 3 detik
+                setTimeout(function(){ 
+                    toast.className = toast.className.replace("show", ""); 
+                }, 3000);
+            }).catch(function(err) {
+                console.error('Gagal menyalin link: ', err);
+                alert("Gagal menyalin link. Silakan buka gambar dan copy dari browser.");
+            });
+        }
+
+        // Fungsi khusus untuk tombol WA agar tidak men-trigger klik gambar
+        function stopProp(event) {
+            event.stopPropagation();
+        }
+    </script>
 </body>
 </html>
+"""
+
+with open("bellagenda_complete_links.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
+
+print("[file-tag: bellagenda_complete_links.html]")
