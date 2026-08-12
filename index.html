@@ -50,6 +50,7 @@
             border: 2px solid #E5E0D8;
             padding: 4px;
             margin-bottom: 16px;
+            background-color: #FFFFFF; /* Solusi agar logo PNG tetap rapi */
         }
         
         .profile h1 {
@@ -70,7 +71,7 @@
         .links-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 24px; /* Sedikit dilonggarkan agar tombol muat */
+            gap: 24px;
         }
         
         .image-card {
@@ -81,6 +82,8 @@
             border-radius: 24px;
             overflow: hidden;
             text-decoration: none;
+            background-color: #FFFFFF; /* PERBAIKAN 1: Background solid untuk PNG transparan */
+            border: 1px solid #E5E0D8; /* PERBAIKAN 2: Garis tepi halus */
             box-shadow: 0 10px 24px rgba(0,0,0,0.04);
             transform: translateZ(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
@@ -94,7 +97,8 @@
         .image-card img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Jika gambar masih terpotong parah, ganti kata 'cover' jadi 'contain' */
+            object-position: center; /* Memastikan gambar berada tepat di tengah */
             transition: transform 0.6s ease;
         }
         
@@ -127,18 +131,18 @@
             font-size: 13px;
             font-weight: 300;
             line-height: 1.4;
-            margin-bottom: 12px; /* Jarak dengan tombol */
+            margin-bottom: 12px;
         }
 
-        /* Container untuk tombol aksi (Copy & WA) */
+        /* Container untuk tombol aksi */
         .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 8px;
-            flex-wrap: wrap; /* Agar tombol turun jika layar sempit */
+            flex-wrap: wrap;
         }
         
-        /* Tombol Aksi (Copy & WA) */
+        /* Tombol Aksi */
         .action-btn {
             display: inline-flex;
             align-items: center;
@@ -168,7 +172,7 @@
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #2C2A28; /* Warna elegan */
+            background-color: #2C2A28;
             color: #fff;
             text-align: center;
             border-radius: 12px;
@@ -204,7 +208,7 @@
     <div class="container">
         <!-- Profile Section -->
         <div class="profile">
-            <!-- Ganti src ini dengan logo/foto profil Bellagenda -->
+            <!-- Foto profil Bellagenda -->
             <img src="https://cdn.phototourl.com/free/2026-08-12-19164677-db38-4cba-a447-00946f3022ca.png" alt="Bellagenda">
             <h1>Bellagenda</h1>
             <p>Sistem digital untuk vendor wedding.<br>Tampil profesional, kelola klien tanpa ribet.</p>
@@ -214,22 +218,18 @@
         <div class="links-wrapper">
             
             <!-- Card 1: Main App (PRO) -->
-            <!-- Link utama (href) masih bisa diisi link landing page jika gambar diklik -->
             <a href="https://bioqu.id/bellagenda" class="image-card">
                 <img src="https://cdn.phototourl.com/free/2026-08-12-251b90f5-6408-4685-ba4c-366623dd1bcf.png" alt="Sistem Booking & Invoicing">
                 <div class="card-overlay">
                     <div class="card-title">Sistem Booking & Invoicing</div>
                     <div class="card-subtitle">Terima booking & kirim tagihan otomatis ke klien.</div>
                     
-                    <!-- Area Tombol Aksi di dalam Card Overlay -->
+                    <!-- Area Tombol Aksi -->
                     <div class="action-buttons">
-                        <!-- Tombol Copy Link (Panggil fungsi JS copyLink) -->
                         <button class="action-btn copy-btn" onclick="copyLink('https://bioqu.id/bellagenda', event)">
                             📋 Salin Link Web-App
                         </button>
-                        
-                        <!-- Tombol Kirim ke WA (Menggunakan link wa.me) -->
-                        <a href="https://wa.me/?text=Buka%20di%20Laptop:%20https://app.bellagenda.com/pro" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
+                        <a href="https://wa.me/?text=Buka%20di%20Laptop:%20https://bioqu.id/bellagenda" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
                             📲 Kirim ke WA Saya
                         </a>
                     </div>
@@ -276,23 +276,19 @@
         </footer>
     </div>
 
-    <!-- Kotak Notifikasi Toast (Diletakkan di luar card, sebelum body ditutup) -->
+    <!-- Kotak Notifikasi Toast -->
     <div id="toast">✅ Link berhasil disalin! Silakan paste di browser laptop Anda.</div>
 
     <!-- Script JavaScript untuk fungsi Copy dan Stop Propagation -->
     <script>
-        // Fungsi untuk menyalin link
         function copyLink(linkAplikasi, event) {
-            // Mencegah klik tombol men-trigger klik gambar (pindah ke href landing page)
             event.preventDefault(); 
             event.stopPropagation(); 
 
-            // Menggunakan API Clipboard
             navigator.clipboard.writeText(linkAplikasi).then(function() {
                 var toast = document.getElementById("toast");
                 toast.className = "show";
                 
-                // Menghilangkan notifikasi setelah 3 detik
                 setTimeout(function(){ 
                     toast.className = toast.className.replace("show", ""); 
                 }, 3000);
@@ -302,7 +298,6 @@
             });
         }
 
-        // Fungsi khusus untuk tombol WA agar tidak men-trigger klik gambar
         function stopProp(event) {
             event.stopPropagation();
         }
