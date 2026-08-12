@@ -26,9 +26,11 @@
             padding: 40px 20px 60px;
         }
         
+        /* Container dibatasi maksimal 480px dan dipusatkan di tengah layar */
         .container {
             width: 100%;
-            max-width: 480px; /* Lebar maksimal container disetel 480px */
+            max-width: 480px;
+            margin: 0 auto; 
             animation: fadeUp 0.8s ease-out;
         }
         
@@ -67,20 +69,19 @@
             line-height: 1.6;
         }
         
-        /* Large Image Cards Style */
         .links-wrapper {
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
         
-        /* --- KUNCI PERBAIKAN LEBAR KARTU --- */
+        /* Tampilan Kartu yang Clean (Tanpa Tombol) */
         .image-card {
-            display: block;
+            display: flex;
+            flex-direction: column;
             position: relative;
-            width: 100%; /* Lebar 100% mengikuti parent container (.container yang max-width: 480px) */
-            max-width: 100%; /* Memastikan tidak melebihi container */
-            height: 220px; /* Tinggi tetap */
+            width: 100%; 
+            height: 220px;
             border-radius: 24px;
             overflow: hidden;
             text-decoration: none;
@@ -89,6 +90,7 @@
             box-shadow: 0 10px 24px rgba(0,0,0,0.04);
             transform: translateZ(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            cursor: pointer; /* Indikator bisa diklik */
         }
         
         .image-card:hover {
@@ -96,23 +98,22 @@
             box-shadow: 0 14px 30px rgba(0,0,0,0.08);
         }
         
-        /* --- KUNCI PERBAIKAN GAMBAR MENCEGAH MELUBER --- */
         .image-card img {
-            position: absolute; /* Posisikan absolut di dalam kartu */
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Menggunakan contain untuk memastikan gambar utuh terlihat dan tidak membesar */
+            object-fit: cover; 
             object-position: center;
             transition: transform 0.6s ease;
+            z-index: 0;
         }
         
         .image-card:hover img {
             transform: scale(1.05);
         }
         
-        /* Gradient overlay */
         .card-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -121,7 +122,7 @@
             flex-direction: column;
             justify-content: flex-end;
             padding: 20px 24px;
-            z-index: 1; /* Pastikan overlay di atas gambar */
+            z-index: 1;
         }
         
         .card-title {
@@ -137,45 +138,121 @@
             font-size: 13px;
             font-weight: 300;
             line-height: 1.4;
+        }
+
+        /* 
+         * STYLING UNTUK POPUP MODAL 
+         */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #FFFFFF;
+            width: 90%;
+            max-width: 360px;
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #7A756D;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-icon {
+            font-size: 32px;
             margin-bottom: 12px;
         }
 
-        /* Container untuk tombol aksi */
-        .action-buttons {
-            display: flex;
-            gap: 8px; /* Sedikit dirapatkan */
-            margin-top: 8px;
-            flex-wrap: wrap;
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2C2A28;
         }
-        
-        /* Tombol Aksi */
-        .action-btn {
-            display: inline-flex;
+
+        .modal-desc {
+            font-size: 13px;
+            color: #7A756D;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #FFFFFF;
-            padding: 6px 12px; /* Disesuaikan agar proporsional */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            font-size: 11px; /* Disesuaikan agar proporsional */
-            font-weight: 500;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
             font-family: 'Plus Jakarta Sans', sans-serif;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
-        }
-        
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            transition: all 0.2s ease;
         }
 
-        /* Pop-up Notifikasi (Toast) */
+        .btn-wa {
+            background-color: #25D366; 
+            color: white;
+            border: none;
+        }
+        
+        .btn-wa:hover {
+            background-color: #128C7E;
+        }
+
+        .btn-copy {
+            background-color: transparent;
+            color: #2C2A28;
+            border: 1px solid #E5E0D8;
+        }
+        
+        .btn-copy:hover {
+            background-color: #F8F6F3;
+        }
+
+        /* Toast Notifikasi */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -215,7 +292,6 @@
     <div class="container">
         <!-- Profile Section -->
         <div class="profile">
-            <!-- Foto profil Bellagenda -->
             <img src="https://cdn.phototourl.com/free/2026-08-12-19164677-db38-4cba-a447-00946f3022ca.png" alt="Bellagenda">
             <h1>Bellagenda</h1>
             <p>Sistem digital untuk vendor wedding.<br>Tampil profesional, kelola klien tanpa ribet.</p>
@@ -225,54 +301,29 @@
         <div class="links-wrapper">
             
             <!-- Card 1: Main App (PRO) -->
-            <a href="https://bioqu.id/bellagenda" class="image-card">
+            <a href="javascript:void(0)" class="image-card" onclick="openModal('Sistem Booking & Invoicing', 'https://bioqu.id/bellagenda')">
                 <img src="https://cdn.phototourl.com/free/2026-08-12-251b90f5-6408-4685-ba4c-366623dd1bcf.png" alt="Sistem Booking & Invoicing">
                 <div class="card-overlay">
                     <div class="card-title">Sistem Booking & Invoicing</div>
                     <div class="card-subtitle">Terima booking & kirim tagihan otomatis ke klien.</div>
-                    
-                    <!-- Area Tombol Aksi -->
-                    <div class="action-buttons">
-                        <button class="action-btn copy-btn" onclick="copyLink('https://bioqu.id/bellagenda', event)">
-                            📋 Salin Link Web-App
-                        </button>
-                        <a href="https://wa.me/?text=Buka%20di%20Laptop:%20https://bioqu.id/bellagenda" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
-                            📲 Kirim ke WA Saya
-                        </a>
-                    </div>
                 </div>
             </a>
 
             <!-- Card 2: Interactive Catalog -->
-            <a href="https://landingpage-katalog.com" class="image-card">
+            <a href="javascript:void(0)" class="image-card" onclick="openModal('Katalog Digital Interaktif', 'https://app.bellagenda.com/catalog')">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Katalog Digital">
                 <div class="card-overlay">
                     <div class="card-title">Katalog Digital Interaktif</div>
                     <div class="card-subtitle">Ubah pricelist PDF-mu menjadi web-app elegan.</div>
-                    
-                    <div class="action-buttons">
-                        <button class="action-btn copy-btn" onclick="copyLink('https://app.bellagenda.com/catalog', event)">
-                            📋 Salin Link Web-App
-                        </button>
-                        <a href="https://wa.me/?text=Buka%20Katalog%20di%20Laptop:%20https://app.bellagenda.com/catalog" class="action-btn wa-btn" onclick="stopProp(event)" target="_blank">
-                            📲 Kirim ke WA Saya
-                        </a>
-                    </div>
                 </div>
             </a>
 
             <!-- Card 3: Free Tool (Lite) -->
-            <a href="https://landingpage-lite.com" class="image-card">
+            <a href="javascript:void(0)" class="image-card" onclick="openModal('Client Tracker (Versi Lite)', 'https://app.bellagenda.com/lite')">
                 <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Client Tracker">
                 <div class="card-overlay">
                     <div class="card-title">Client Tracker (Versi Lite)</div>
                     <div class="card-subtitle">Template pintar untuk mulai merapikan antrean klienmu.</div>
-                    
-                    <div class="action-buttons">
-                        <button class="action-btn copy-btn" onclick="copyLink('https://app.bellagenda.com/lite', event)">
-                            📋 Salin Link Web-App
-                        </button>
-                    </div>
                 </div>
             </a>
 
@@ -283,31 +334,77 @@
         </footer>
     </div>
 
+    <!-- MODAL POPUP (Muncul saat card diklik) -->
+    <div id="actionModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-icon">💻</div>
+            <h2 class="modal-title" id="modalTitle">Nama Aplikasi</h2>
+            <p class="modal-desc">Untuk pengalaman terbaik mengelola klien, buka aplikasi ini di Laptop/PC Anda.</p>
+            
+            <div class="modal-btn-group">
+                <!-- Tombol WA -->
+                <a href="#" id="modalWaBtn" class="modal-btn btn-wa" target="_blank">
+                    📲 Kirim Link ke WA Saya
+                </a>
+                
+                <!-- Tombol Copy -->
+                <button id="modalCopyBtn" class="modal-btn btn-copy" onclick="copyFromModal()">
+                    📋 Salin Tautan (Copy Link)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Kotak Notifikasi Toast -->
     <div id="toast">✅ Link berhasil disalin! Silakan paste di browser laptop Anda.</div>
 
-    <!-- Script JavaScript untuk fungsi Copy dan Stop Propagation -->
     <script>
-        function copyLink(linkAplikasi, event) {
-            event.preventDefault(); 
-            event.stopPropagation(); 
+        let currentLink = "";
 
-            navigator.clipboard.writeText(linkAplikasi).then(function() {
+        // Buka Pop-up Modal
+        function openModal(appName, appLink) {
+            currentLink = appLink;
+            
+            // Ganti Judul Modal
+            document.getElementById('modalTitle').innerText = appName;
+            
+            // Siapkan Link WA
+            const waMessage = encodeURIComponent(`Buka ${appName} di Laptop:\n${appLink}`);
+            document.getElementById('modalWaBtn').href = `https://wa.me/?text=${waMessage}`;
+            
+            // Tampilkan Modal
+            document.getElementById('actionModal').classList.add('active');
+        }
+
+        // Tutup Pop-up Modal
+        function closeModal() {
+            document.getElementById('actionModal').classList.remove('active');
+        }
+
+        // Salin Link & Munculkan Notifikasi
+        function copyFromModal() {
+            navigator.clipboard.writeText(currentLink).then(function() {
                 var toast = document.getElementById("toast");
                 toast.className = "show";
                 
                 setTimeout(function(){ 
                     toast.className = toast.className.replace("show", ""); 
                 }, 3000);
+                
+                closeModal(); // Otomatis tutup modal setelah berhasil copy
             }).catch(function(err) {
                 console.error('Gagal menyalin link: ', err);
-                alert("Gagal menyalin link. Silakan buka gambar dan copy dari browser.");
+                alert("Gagal menyalin link. Silakan coba lagi.");
             });
         }
 
-        function stopProp(event) {
-            event.stopPropagation();
-        }
+        // Tutup modal jika area luar diklik
+        document.getElementById('actionModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
