@@ -28,7 +28,7 @@
         
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 480px; /* Lebar maksimal container disetel 480px */
             animation: fadeUp 0.8s ease-out;
         }
         
@@ -50,7 +50,7 @@
             border: 2px solid #E5E0D8;
             padding: 4px;
             margin-bottom: 16px;
-            background-color: #FFFFFF; /* Solusi agar logo PNG tetap rapi */
+            background-color: #FFFFFF;
         }
         
         .profile h1 {
@@ -74,16 +74,18 @@
             gap: 24px;
         }
         
+        /* --- KUNCI PERBAIKAN LEBAR KARTU --- */
         .image-card {
             display: block;
             position: relative;
-            width: 100%;
-            height: 220px;
+            width: 100%; /* Lebar 100% mengikuti parent container (.container yang max-width: 480px) */
+            max-width: 100%; /* Memastikan tidak melebihi container */
+            height: 220px; /* Tinggi tetap */
             border-radius: 24px;
             overflow: hidden;
             text-decoration: none;
-            background-color: #FFFFFF; /* PERBAIKAN 1: Background solid untuk PNG transparan */
-            border: 1px solid #E5E0D8; /* PERBAIKAN 2: Garis tepi halus */
+            background-color: #FFFFFF;
+            border: 1px solid #E5E0D8;
             box-shadow: 0 10px 24px rgba(0,0,0,0.04);
             transform: translateZ(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
@@ -94,11 +96,15 @@
             box-shadow: 0 14px 30px rgba(0,0,0,0.08);
         }
         
+        /* --- KUNCI PERBAIKAN GAMBAR MENCEGAH MELUBER --- */
         .image-card img {
+            position: absolute; /* Posisikan absolut di dalam kartu */
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Jika gambar masih terpotong parah, ganti kata 'cover' jadi 'contain' */
-            object-position: center; /* Memastikan gambar berada tepat di tengah */
+            object-fit: contain; /* Menggunakan contain untuk memastikan gambar utuh terlihat dan tidak membesar */
+            object-position: center;
             transition: transform 0.6s ease;
         }
         
@@ -115,7 +121,7 @@
             flex-direction: column;
             justify-content: flex-end;
             padding: 20px 24px;
-            z-index: 1;
+            z-index: 1; /* Pastikan overlay di atas gambar */
         }
         
         .card-title {
@@ -137,30 +143,31 @@
         /* Container untuk tombol aksi */
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px; /* Sedikit dirapatkan */
             margin-top: 8px;
             flex-wrap: wrap;
         }
-      
-       /* Tombol Aksi (Copy & WA) */
+        
+        /* Tombol Aksi */
         .action-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px; /* Jarak antara ikon dan teks diperkecil */
+            gap: 4px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             color: #FFFFFF;
-            padding: 5px 10px; /* PERBAIKAN: Padding diperkecil agar tombol tidak gemuk */
+            padding: 6px 12px; /* Disesuaikan agar proporsional */
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px; /* Sudut disesuaikan dengan ukuran baru */
-            font-size: 10px; /* PERBAIKAN: Ukuran font diperkecil */
+            border-radius: 20px;
+            font-size: 11px; /* Disesuaikan agar proporsional */
             font-weight: 500;
             font-family: 'Plus Jakarta Sans', sans-serif;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-sizing: border-box; /* Pastikan padding tidak menambah ukuran */
         }
         
         .action-btn:hover {
