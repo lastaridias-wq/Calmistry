@@ -140,9 +140,7 @@
             line-height: 1.4;
         }
 
-        /* 
-         * STYLING UNTUK POPUP MODAL 
-         */
+        /* STYLING UNTUK POPUP MODAL */
         .modal-overlay {
             display: none; 
             position: fixed;
@@ -334,7 +332,7 @@
         </footer>
     </div>
 
-    <!-- MODAL POPUP (Muncul saat card diklik) -->
+    <!-- MODAL POPUP -->
     <div id="actionModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
@@ -383,12 +381,16 @@
         }
 
         // Salin Link & Munculkan Notifikasi
-        function salinTautan() {
-        const linkBio = "https://bioqu.id/GenMUA?studio=" + encodeURIComponent(appState.studioName);
-        navigator.clipboard.writeText(linkBio).then(() => {
-        showToast("📋 Link Bioqu studio berhasil disalin!");
-    });
-}
+        function copyFromModal() {
+            if (!currentLink) return;
+
+            navigator.clipboard.writeText(currentLink).then(function() {
+                var toast = document.getElementById("toast");
+                toast.className = "show";
+                
+                setTimeout(function(){ 
+                    toast.className = toast.className.replace("show", ""); 
+                }, 3000);
                 
                 closeModal(); // Otomatis tutup modal setelah berhasil copy
             }).catch(function(err) {
