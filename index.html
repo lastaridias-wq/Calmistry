@@ -26,7 +26,6 @@
             padding: 40px 20px 60px;
         }
         
-        /* Container dibatasi maksimal 480px dan dipusatkan di tengah layar */
         .container {
             width: 100%;
             max-width: 480px;
@@ -75,7 +74,7 @@
             gap: 24px;
         }
         
-        /* Tampilan Kartu yang Clean (Tanpa Tombol) */
+        /* Kartu Interaktif */
         .image-card {
             display: flex;
             flex-direction: column;
@@ -84,16 +83,16 @@
             height: 220px;
             border-radius: 24px;
             overflow: hidden;
-            text-decoration: none;
             background-color: #FFFFFF;
             border: 1px solid #E5E0D8;
             box-shadow: 0 10px 24px rgba(0,0,0,0.04);
             transform: translateZ(0);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-            cursor: pointer; /* Indikator bisa diklik */
+            cursor: pointer;
+            user-select: none;
         }
         
-        .image-card:hover {
+        .image-card:hover, .image-card:active {
             transform: translateY(-4px) scale(1.01);
             box-shadow: 0 14px 30px rgba(0,0,0,0.08);
         }
@@ -140,24 +139,27 @@
             line-height: 1.4;
         }
 
-        /* STYLING UNTUK POPUP MODAL */
+        /* Styling Modal Overlay & Content */
         .modal-overlay {
-            display: none; 
+            display: flex;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            z-index: 999;
+            z-index: 9999;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .modal-overlay.active {
-            display: flex;
+            visibility: visible;
             opacity: 1;
+            pointer-events: auto;
         }
 
         .modal-content {
@@ -167,7 +169,7 @@
             border-radius: 20px;
             padding: 24px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             transform: translateY(20px);
             transition: transform 0.3s ease;
             position: relative;
@@ -183,10 +185,11 @@
             right: 16px;
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 22px;
             color: #7A756D;
             cursor: pointer;
             padding: 4px;
+            line-height: 1;
         }
 
         .modal-icon {
@@ -260,7 +263,7 @@
             border-radius: 12px;
             padding: 14px;
             position: fixed;
-            z-index: 1000;
+            z-index: 10000;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
@@ -299,31 +302,31 @@
         <div class="links-wrapper">
             
             <!-- Card 1: Main App (PRO) -->
-            <a href="javascript:void(0)" class="image-card" onclick="openModal('Sistem Booking & Invoicing', 'https://bioqu.id/GenMUA')">
+            <div class="image-card" onclick="openModal('Sistem Booking & Invoicing', 'https://bioqu.id/GenMUA')">
                 <img src="https://cdn.phototourl.com/free/2026-08-12-251b90f5-6408-4685-ba4c-366623dd1bcf.png" alt="Sistem Booking & Invoicing">
                 <div class="card-overlay">
                     <div class="card-title">Sistem Booking & Invoicing</div>
                     <div class="card-subtitle">Terima booking & kirim tagihan otomatis ke klien.</div>
                 </div>
-            </a>
+            </div>
 
             <!-- Card 2: Interactive Catalog -->
-            <a href="javascript:void(0)" class="image-card" onclick="openModal('Katalog Digital Interaktif', 'https://app.bellagenda.com/catalog')">
+            <div class="image-card" onclick="openModal('Katalog Digital Interaktif', 'https://app.bellagenda.com/catalog')">
                 <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Katalog Digital">
                 <div class="card-overlay">
                     <div class="card-title">Katalog Digital Interaktif</div>
                     <div class="card-subtitle">Ubah pricelist PDF-mu menjadi web-app elegan.</div>
                 </div>
-            </a>
+            </div>
 
             <!-- Card 3: Free Tool (Lite) -->
-            <a href="javascript:void(0)" class="image-card" onclick="openModal('Client Tracker (Versi Lite)', 'https://app.bellagenda.com/lite')">
+            <div class="image-card" onclick="openModal('Client Tracker (Versi Lite)', 'https://app.bellagenda.com/lite')">
                 <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="Client Tracker">
                 <div class="card-overlay">
                     <div class="card-title">Client Tracker (Versi Lite)</div>
                     <div class="card-subtitle">Template pintar untuk mulai merapikan antrean klienmu.</div>
                 </div>
-            </a>
+            </div>
 
         </div>
 
@@ -360,46 +363,64 @@
     <script>
         let currentLink = "";
 
-        // Buka Pop-up Modal
+        // Buka Modal Pop-up
         function openModal(appName, appLink) {
             currentLink = appLink;
             
-            // Ganti Judul Modal
             document.getElementById('modalTitle').innerText = appName;
             
-            // Siapkan Link WA
-            const waMessage = encodeURIComponent(`Buka ${appName} di Laptop:\n${appLink}`);
-            document.getElementById('modalWaBtn').href = `https://wa.me/?text=${waMessage}`;
+            const waMessage = encodeURIComponent("Buka " + appName + " di Laptop:\n" + appLink);
+            document.getElementById('modalWaBtn').href = "https://wa.me/?text=" + waMessage;
             
-            // Tampilkan Modal
             document.getElementById('actionModal').classList.add('active');
         }
 
-        // Tutup Pop-up Modal
+        // Tutup Modal Pop-up
         function closeModal() {
             document.getElementById('actionModal').classList.remove('active');
         }
 
-        // Salin Link & Munculkan Notifikasi
+        // Fungsi Salin Link Pintar (Beserta Fallback)
         function copyFromModal() {
             if (!currentLink) return;
 
-            navigator.clipboard.writeText(currentLink).then(function() {
-                var toast = document.getElementById("toast");
-                toast.className = "show";
-                
-                setTimeout(function(){ 
-                    toast.className = toast.className.replace("show", ""); 
-                }, 3000);
-                
-                closeModal(); // Otomatis tutup modal setelah berhasil copy
-            }).catch(function(err) {
-                console.error('Gagal menyalin link: ', err);
-                alert("Gagal menyalin link. Silakan coba lagi.");
-            });
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(currentLink)
+                    .then(showToastAndClose)
+                    .catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
         }
 
-        // Tutup modal jika area luar diklik
+        // Sistem Cadangan Salin jika Clipboard API diblokir browser
+        function fallbackCopy() {
+            const tempInput = document.createElement("input");
+            tempInput.value = currentLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                showToastAndClose();
+            } catch (err) {
+                alert("Link: " + currentLink);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // Notifikasi & Tutup Modal
+        function showToastAndClose() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            
+            setTimeout(function() { 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+            
+            closeModal();
+        }
+
+        // Tutup modal jika mengklik area gelap luar
         document.getElementById('actionModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
