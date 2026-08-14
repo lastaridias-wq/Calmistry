@@ -383,14 +383,12 @@
         }
 
         // Salin Link & Munculkan Notifikasi
-        function copyFromModal() {
-            navigator.clipboard.writeText(currentLink).then(function() {
-                var toast = document.getElementById("toast");
-                toast.className = "show";
-                
-                setTimeout(function(){ 
-                    toast.className = toast.className.replace("show", ""); 
-                }, 3000);
+        function salinTautan() {
+        const linkBio = "https://bioqu.id/GenMUA?studio=" + encodeURIComponent(appState.studioName);
+        navigator.clipboard.writeText(linkBio).then(() => {
+        showToast("📋 Link Bioqu studio berhasil disalin!");
+    });
+}
                 
                 closeModal(); // Otomatis tutup modal setelah berhasil copy
             }).catch(function(err) {
